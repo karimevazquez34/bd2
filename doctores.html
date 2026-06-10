@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Colección: Personal Médico</title>
+    <style>
+        body { font-family: Arial, sans-serif; color: #2d3748; padding: 20px; background-color: #f0f2f5; margin: 0; }
+        h1 { color: #1a365d; border-bottom: 2px solid #2b6cb0; padding-bottom: 10px; text-transform: uppercase; font-size: 16pt; margin-top: 0; }
+        
+        .seccion-columnas { display: flex; gap: 20px; align-items: flex-start; }
+        .columna-formulario { flex: 1; position: sticky; top: 10px; }
+        .columna-registros { flex: 1.5; max-height: 600px; overflow-y: auto; padding-right: 5px; }
+
+        .formulario-agregar { background-color: #ffffff; padding: 20px; border-radius: 8px; border: 1px solid #ced4da; margin-bottom: 30px; }
+        .formulario-agregar h3 { margin-top: 0; margin-bottom: 15px; color: #495057; }
+        .grupo-campo { margin-bottom: 12px; display: flex; flex-direction: column; }
+        .grupo-campo label { font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .grupo-campo input, .grupo-campo select { padding: 8px; border: 1px solid #ced4da; border-radius: 4px; font-size: 14px; }
+
+        .btn-guardar { background-color: #28a745; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 14px; width: 100%; transition: background 0.2s; }
+        .btn-guardar:hover { background-color: #218838; }
+
+        .data-block { background-color: #ffffff; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 10.5pt; margin-bottom: 15px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .data-block ul { list-style-type: none; padding: 0; margin: 0; }
+        .data-block li { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Doctores</h1>
+    <hr style="border: 0; border-top: 2px solid #2b6cb0; margin-bottom: 20px;">
+
+    <div class="seccion-columnas">
+        <div class="columna-formulario">
+            <div class="formulario-agregar">
+                <h3>+ Registrar Nuevo Médico</h3>
+                <form id="formMedico" onsubmit="agregarMedico(event)">
+                    <div class="grupo-campo"><label>ID Médico:</label><input type="number" id="id_medico" required></div>
+                    <div class="grupo-campo"><label>Nombre Completo:</label><input type="text" id="nombre" required></div>
+                    <div class="grupo-campo"><label>Especialidad:</label><input type="text" id="especialidad" required></div>
+                    <div class="grupo-campo"><label>Número de Licencia:</label><input type="text" id="num_licencia" required></div>
+                    <div class="grupo-campo"><label>Turno:</label>
+                        <select id="turno" required>
+                            <option value="">Selecciona opción</option>
+                            <option value="Mañana">Mañana</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+                    </div>
+                    <div class="grupo-campo"><label>Departamento:</label><input type="text" id="departamento" required></div>
+                    <button type="submit" class="btn-guardar">Guardar Registro</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="columna-registros">
+            <h3>Lista de Registros Actuales</h3>
+            <div id="contenedor-registros">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function agregarMedico(event) {
+            event.preventDefault();
+            var id = document.getElementById('id_medico').value;
+            var nombre = document.getElementById('nombre').value;
+            var esp = document.getElementById('especialidad').value;
+            var lic = document.getElementById('num_licencia').value;
+            var turno = document.getElementById('turno').value;
+            var dept = document.getElementById('departamento').value;
+
+            var nuevo = document.createElement('div');
+            nuevo.className = 'data-block';
+            nuevo.innerHTML = `<ul><li>id_medico: ${id}</li><li>nombre: "${nombre}"</li><li>especialidad: "${esp}"</li><li>num_licencia: "${lic}"</li><li>turno: "${turno}"</li><li>departamento: "${dept}"</li></ul>`;
+            document.getElementById('contenedor-registros').appendChild(nuevo);
+            document.getElementById('formMedico').reset();
+        }
+    </script>
+</body>
+</html>
